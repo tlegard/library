@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>CS 4624: Transcription Project</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+      
+      <!-- Chang URLs to wherever Video.js files will be hosted -->
+      <link href="styles/css/lib/video-js.css" rel="stylesheet" type="text/css">
+
+      <!-- video.js must be in the <head> for older IEs to work. -->
+      <script src="scripts/lib/video.js"></script>
+
+    <link href="styles/css/lib/bootstrap.min.css" media="screen,projection" rel="stylesheet" type="text/css">
+    <link href="styles/css/screen.css" media="screen,projection" rel="stylesheet" type="text/css">
+    <!--[if IE]>
+        <link href="styles/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <![endif]-->
+
+</head>
+<body>
+   
+    <div id="app">
+    </div>
+
+    <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an outdated browser.
+        <a href="http://browsehappy.com/">Upgrade your browser today</a> or
+        <a href="http://www.google.com/chromeframe/?redirect=true">install
+        Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+
+    <script>
+        confidenceToColor = function(confidence) {
+            var h= Math.floor((confidence) * 120 / 100 + 10);
+            return hsv2rgb(h, .9, 1);
+        } 
+
+        var hsv2rgb = function(h, s, v) {
+          // adapted from http://schinckel.net/2012/01/10/hsv-to-rgb-in-javascript/
+          var rgb, i, data = [];
+          if (s === 0) {
+            rgb = [v,v,v];
+          } else {
+            h = h / 60;
+            i = Math.floor(h);
+            data = [v*(1-s), v*(1-s*(h-i)), v*(1-s*(1-(h-i)))];
+            switch(i) {
+              case 0:
+                rgb = [v, data[2], data[0]];
+                break;
+              case 1:
+                rgb = [data[1], v, data[0]];
+                break;
+              case 2:
+                rgb = [data[0], v, data[2]];
+                break;
+              case 3:
+                rgb = [data[0], data[1], v];
+                break;
+              case 4:
+                rgb = [data[2], data[0], v];
+                break;
+              default:
+                rgb = [v, data[0], data[1]];
+                break;
+            }
+          }
+          return '#' + rgb.map(function(x){
+            return ("0" + Math.round(x*255).toString(16)).slice(-2);
+          }).join('');
+        };
+    </script>
+
+    <script id="cue" type="text/html">
+        <% 
+            var color = confidenceToColor(confidence);
+        %>
+       <a style="color: <%= color %>"><div class="name"><%= name %></div><span class="listen glyphicon glyphicon-volume-up"></span><span class="remove glyphicon glyphicon-remove"></span><span class="ok glyphicon glyphicon-ok"></span>&nbsp;</a>
+    </script>
+    <script id="cue-edit" type="text/html">
+       <a class="active"><input class="cue-edit" type="text" value="<%= name %>" /><span class="listen glyphicon glyphicon-volume-up"></span><span class="remove glyphicon glyphicon-remove"></span><span class="ok glyphicon glyphicon-ok"></span>&nbsp;</a>
+    </script>
+    <script id="cue-composite" type="text/html">
+            <select name="sort">
+              <option value="">Sort By:</option>
+              <option value="confidence">Confidence</option>
+              <option value="time">Time</option>
+            </select>
+          <span class="save glyphicon glyphicon-floppy-disk"></span>
+                  <ul class="nav nav-stacked nav-pills">
+       <ul id='cue-collection-container' class="nav nav-pills nav-stacked">
+       </ul>
+       </div>
+    </script>
+    <script id="video-short" type="text/html">
+       <a><%= name %></a>
+    </script>
+    <script id="main-template" type="text/template">
+      <section class="content">
+
+      </section>
+    </script>
+    <script id="videos-composite" type="text/template">
+          <div class="videos">
+          <h1>Video List</h1>
+          <p>The following a list of videos that we currently have transcription data on:</p>
+          <ul id="videos" class="nav nav-stacked nav-pills">
+          </ul>
+          </div>
+    </script>
+    <script id="transcribing-template" type="text/template">
+      <h1 class="first">Transcription Maker</h1>
+      <section id="video">
+      </section>
+      <section id="cuepane">
+
+        </ul>
+      </section>
+      <section id="bankpane">
+        <ul class="nav nav-stacked nav-pills">
+        </ul>
+      </section>
+    </script>
+    <script id="video-template" type="text/template">
+        <span class="edit glyphicon glyphicon-text-width" alt="Edit Video Source" title="Edit Video Source"></span>
+        <video id="video1" src="<%=videoSrc %>"></video>
+    </script>
+    <script id="video-edit" type="text/template">
+        <p>Please provide a video source</p>
+        <input type="text" class="video" id="videoSrc" />
+        <span class="ok glyphicon glyphicon-ok" ></span>
+    </script>
+    <script data-main="scripts/config" src="scripts/require.js"></script>
+    <!-- @@version -->
+    
+</body>
+</html>

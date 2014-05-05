@@ -1,0 +1,10 @@
+{
+  "name": "transcription",
+  "description": "Useful for converting videos into words",
+  "author": "Tucker Legard (tlegard@vt.edu)",
+  "dependencies": {
+    "express": "~3.3.3",
+    "mongoose": "~3.8.8",
+    "underscore": "~1.6.0"
+  }
+}
