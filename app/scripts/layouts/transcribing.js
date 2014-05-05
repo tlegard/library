@@ -20,7 +20,7 @@ define([
         regions: {
             cuepane: '#cuepane',
             video: '#video',
-            bank: '#bank'
+            bank: '#bankpane'
         },
         initialize: function(options) {
             if (options && options.videoModel) {

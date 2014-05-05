@@ -12,15 +12,34 @@ define([
         Listens to the Backbone.pubSub to listen to the addCue event, once
         recieved it will add the cue the collection */
 
-    return Marionette.CollectionView.extend({
+    return Marionette.CompositeView.extend({
         itemView: CueView,
+        itemViewContainer: '#bank',
+        template: '#bank-composite',
         collection: new Backbone.Collection(),
-        el: "#bankpane ul",
         initialize: function(){
             this.listenTo(Backbone.pubSub, 'addCue', this.addCue);
         },
+        events: {
+            'click .export': 'export',
+            'click .revert': 'revert'
+        },
         addCue: function(model) {
             this.collection.add(model);
+            this.render();
+        },
+        export: function() {
+            /** Reduce to the collection down to just a string.  */
+            this.model = new Backbone.Model();
+            var exportedString = _.reduce(this.collection.models, function(memo, model) {
+                return (model) ? memo + model.get('name') + " " : memo;
+            }, "");
+            this.model.set('text', exportedString);
+            this.template = '#text-dump';
+            this.render();
+        },
+        revert: function() {
+            this.template = '#bank-composite';
             this.render();
         },
         onBeforeRender: function(collection) {

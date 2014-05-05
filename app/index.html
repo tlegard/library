@@ -120,12 +120,18 @@
       </section>
       <section id="cuepane">
 
-        </ul>
       </section>
       <section id="bankpane">
-        <ul class="nav nav-stacked nav-pills">
-        </ul>
       </section>
+    </script>
+    <script id="bank-composite" type="text/template">
+        <span class="glyphicon glyphicon-share-alt export"></span>
+        <ul id="bank"  class="nav nav-stacked nav-pills">
+        </ul>
+    </script>
+    <script id="text-dump" type="text/template">
+        <span class="glyphicon glyphicon-arrow-left revert"></span>
+        <textarea><%= text %></textarea>
     </script>
     <script id="video-template" type="text/template">
         <span class="edit glyphicon glyphicon-text-width" alt="Edit Video Source" title="Edit Video Source"></span>
@@ -133,7 +139,7 @@
     </script>
     <script id="video-edit" type="text/template">
         <p>Please provide a video source</p>
-        <input type="text" class="video" id="videoSrc" />
+        <input type="text" class="video" id="videoSrc" value="<%=videoSrc %>" />
         <span class="ok glyphicon glyphicon-ok" ></span>
     </script>
     <script data-main="scripts/config" src="scripts/require.js"></script>

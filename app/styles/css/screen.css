@@ -1083,6 +1083,17 @@ select {
   padding: 30px;
 }
 
+.revert, .export {
+  font-size: 14pt;
+  margin-bottom: 10px;
+  color: #468847;
+  display: block;
+}
+
+#bankpane textarea {
+  width: 100%;
+}
+
 #bankpane li {
 	float: left;
 }
