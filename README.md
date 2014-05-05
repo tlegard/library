@@ -4,11 +4,11 @@ library
 
 ## Overview
 
-This is a collection of code needed for the CS 4264: Library Transcription Project. It is indeed to work with 
-Adobe Premerie CS6 and provide a GUI for transcribing and filtering out key words of a view. 
+This is a collection of code needed for the CS 4264: Library Transcription Project. It is
+intended to work with Adobe Premerie CS6 and provide a GUI for transcribing and filtering out key words of a video. 
 
 ## Running the Server
-  0. Clone this repo a
+  0. Clone this repo
   
   1. Install [node](http://nodejs.org)
   
@@ -36,8 +36,11 @@ You'll also need to install from the [ntlk corpus](http://www.nltk.org/data.html
 ### Configuration
 You'll also need to change the two variables in the `watchForNew.py`
 ```
-PREMERIE_PATH: “” // this is the path to the directory in which the log file 
- for Adobe Premiere's Media Encoder is kept
-XML_PATH: “” // this is the path you which for the XML files to be moved to and 
-   renamed. 
+PREMERIE_PATH: "" // this is the path to the directory in which the log file 
+                     for Adobe Premiere's Media Encoder is kept
+XML_PATH: ""      // this is the path you which for the XML files to be moved to and 
+                     renamed. 
 ```
+
+## Database
+You'll also need to spend up a `mongod` process from [mongodb](http://mongodb.org) and configure the dbpath to a logical location. 
