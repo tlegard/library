@@ -2,8 +2,7 @@ define([
     'backbone',
     'marionette',
     'views/cue',
-    'collections/cue',
-], function (Backbone, Marionette, CueView, CueCollection) {
+], function (Backbone, Marionette, CueView) {
     "use strict";
 
     /**

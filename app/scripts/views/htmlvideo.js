@@ -4,7 +4,10 @@ define([
 ], function (Backbone, Marionette) {
     "use strict";
 
+    /** A simple MariontteWrapper for dealing with the videopane in the transcription layout,
+        has simple fuctions to save and edit.
 
+        Provide the model it should be for when instantiated */
     return Marionette.ItemView.extend({
     	template: '#video-template',
         events: {

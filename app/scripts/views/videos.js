@@ -1,25 +1,22 @@
 define([
     'backbone',
     'marionette',
-    'views/video'
-], function (Backbone, Marionette, VideoView) {
+    'views/video',
+    'collections/videos'
+], function (Backbone, Marionette, VideoView, VideoCollection) {
     "use strict";
 
-    var VideoCollection = Backbone.Collection.extend({
-        url: 'transcription/'
-    });
-
+    /** Composite view showing a list of videos from the database, it's the only thing 
+        of the MainLayout */
     return Marionette.CompositeView.extend({
         itemView: VideoView,
         itemViewContainer: '#videos',
         template: '#videos-composite',
         collection: new VideoCollection(),
         initialize: function() {
-            console.log("fetching");
             this.collection.fetch();
         },
         onRender: function() {
-            console.log("rendering");
         }
     });
 });

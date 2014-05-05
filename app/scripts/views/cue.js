@@ -33,7 +33,7 @@ define([
             this.static();
         },
     	static: function() {
-            // Swithc template to static mode and rerender.
+            // Switch template to static mode and rerender.
     		this.template = '#cue'
     		this.render();
     	},
