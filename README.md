@@ -44,3 +44,10 @@ XML_PATH: ""      // this is the path you which for the XML files to be moved to
 
 ## Database
 You'll also need to spend up a `mongod` process from [mongodb](http://mongodb.org) and configure the dbpath to a logical location. 
+
+### Importing the Test Data
+Our program will watch for the changes on the video collection. We’ve provided the test data we used in this program.
+
+It can easily be imported after ensuring the mongod process is running by running the following command from the root of the project directory.
+
+	mongoimport --db library --collection videos ./testData.json
