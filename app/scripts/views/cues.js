@@ -2,8 +2,9 @@ define([
   'underscore', 
   'backbone', 
   'marionette', 
-  'views/cue'
-], function (_, Backbone, Marionette, CueView) {
+  'views/cue',
+  'collections/uniquecues'
+], function (_, Backbone, Marionette, CueView, UniqueCuesCollection) {
     'use strict';
 
     /** CuesView is responsible for maintaing the Collection recieved from hitting
@@ -23,9 +24,13 @@ define([
         },
         initialize: function(options){
             if (options && options.videoId) {
-                this.collection = new Backbone.Collection();
-                this.collection.url = 'transcription/' + options.videoId;
-                this.collection.fetch();
+                this.cueCollection = new Backbone.Collection();
+                this.cueCollection.url = 'transcription/' + options.videoId;
+                this.cueCollection.fetch();
+                this.uniqueCollection = new UniqueCuesCollection();
+                this.uniqueCollection.url = 'transcription/' + options.videoId;
+                this.uniqueCollection.fetch();
+                this.collection = this.cueCollection;
             }            
         },
         handleSort: function(event) {
@@ -35,9 +40,13 @@ define([
                 this.sortConfidence();
             else if (type === 'time')
                 this.sortTime();
+            else if (type === 'frequency')
+                this.sortFrequency();
 
         },
         sortConfidence: function() {
+            this.collection = this.cueCollection;
+
             this.collection.comparator = function(obj) {
                 return parseInt(obj.get('confidence'), 10);
             }
@@ -45,12 +54,31 @@ define([
             this.render();
         },
         sortTime: function() {
-            console.log(this.collection);
+            this.collection = this.cueCollection;
+
             this.collection.comparator = function(obj) {
                 return parseInt(obj.get('time'), 10);
             }
             this.collection.sort();
             console.log(this.collection);
+            this.render();
+        },
+        sortFrequency: function() {
+            var freqTable = _.countBy(this.collection.models, function(cue) {
+                return cue.get('name');
+            });
+
+            _.forEach(this.uniqueCollection.models, function(cue) {
+                cue.set('freq', freqTable[cue.get('name')]);
+            });
+
+            this.uniqueCollection.comparator = function(cue) {
+                return 100 - cue.get('freq');
+            };
+
+            this.uniqueCollection.sort();
+
+            this.collection = this.uniqueCollection;
             this.render();
         },
         saveCollection: function() {
